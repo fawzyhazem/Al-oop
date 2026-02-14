@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عشان اغلي الناس </title>
+    <style>
+        :root {
+            --gold: #d4af37;
+            --dark-red: #800000;
+            --black: #1a1a1a;
+        }
+
+       body {
+    margin: 0;
+    padding: 20px; /* عشان المربعات ما تلزقش في أطراف الموبايل */
+    background-color: var(--black);
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column; /* دي اللي بتخليهم تحت بعض */
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    gap: 20px; /* دي بتعمل مسافة محترمة بين المربعين */
+    overflow-y: auto; /* عشان لو الصفحة طولت تقدر تنزل لتحت */
+        }
+
+        /* خلفية فخمة بنقشة خفيفة */
+        .overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, rgba(128,0,0,0.3) 0%, rgba(0,0,0,1) 80%);
+            z-index: 1;
+        }
+
+        .main-card {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 40px;
+            border: 2px solid var(--gold);
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+            max-width: 500px;
+            width: 90%;
+        }
+
+        /* مكان الصورة */
+        .couple-img {
+            width: 300px;
+            height: 300px;
+            border-radius: 80%;
+            border: 3px solid var(--gold);
+            object-fit: cover;
+            margin-bottom: 20px;
+            box-shadow: 0 0 20px var(--gold);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--gold);
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #eee;
+        }
+
+        .music-control {
+            margin-top: 30px;
+        }
+
+        .play-btn {
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 10px 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: 0.5s;
+            text-transform: uppercase;
+        }
+
+        .play-btn:hover {
+            background: var(--gold);
+            color: black;
+            box-shadow: 0 0 15px var(--gold);
+        }
+
+        /* جزيئات ذهبية متساقطة */
+        .particle {
+            position: absolute;
+            background: var(--gold);
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        .counter-box {
+    margin-top: 30px;
+    padding: 20px;
+    border-top: 1px solid var(--gold);
+    background: rgba(212, 175, 55, 0.1);
+    border-radius: 10px;
+}
+
+.counter-box h3 {
+    color: var(--gold);
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+#timer {
+    font-size: 1.1rem;
+    color: #fff;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.time-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.time-num {
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--gold);
+}
+
+.time-label {
+    font-size: 0.8rem;
+    color: #ccc;
+}
+
+    </style>
+</head>
+<body>
+
+    <div class="overlay"></div>
+
+    <div class="main-card">
+        <img src="photo.jpg" alt="Our Picture" class="couple-img">
+        
+        <h1>كل عيد حب وأنت عيدي ❤️</h1>
+        <p> حبيت أقولك إنك أجمل حاجة حصلت في حياتي. كل سنة وإحنا مع بعض </p>
+
+        <div class="music-control">
+            <audio id="bgMusic" loop>
+                <source src="amr_diab.mp3" type="audio/mpeg">
+            </audio>
+            <button class="play-btn" onclick="startEverything()">دوس يا قمري انتي هنا 🥰  </button>
+        </div>
+    </div>
+
+    <div class="counter-box">
+    <h3>بقالنا مع بعض:</h3>
+    <div id="timer">
+        </div>
+
+    <script>
+       function startEverything() {
+    const audio = document.getElementById('bgMusic');
+    
+    // السطر ده هو اللي بيخلي الأغنية تبدأ من الثانية 35
+    audio.currentTime = 35; 
+    
+    audio.play();
+    
+    // تغيير نص الزرار
+    document.querySelector('.play-btn').innerText = "أحبك دائماً ❤️";
+        }
+
+        // انيميشن النقط الذهبية (البديل الفخم للقلوب)
+        function createParticle() {
+            const p = document.createElement('div');
+            p.classList.add('particle');
+            const size = Math.random() * 4 + 'px';
+            p.style.width = size;
+            p.style.height = size;
+            p.style.left = Math.random() * 100 + 'vw';
+            p.style.top = '-10px';
+            
+            const duration = Math.random() * 5 + 3;
+            p.style.transition = `transform ${duration}s linear, opacity ${duration}s`;
+            
+            document.body.appendChild(p);
+
+            setTimeout(() => {
+                p.style.transform = `translateY(105vh) translateX(${Math.random() * 100 - 50}px)`;
+            }, 100);
+
+            setTimeout(() => { p.remove(); }, duration * 1000);
+        }
+        function updateTimer() {
+    const startDate = new Date('2022-12-12T00:00:00'); // تاريخ البداية
+    const now = new Date();
+    const diff = now - startDate;
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / 1000 / 60) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+
+    document.getElementById('timer').innerHTML = `
+        <div class="time-unit"><span class="time-num">${days}</span><span class="time-label">يوم</span></div>
+        <div class="time-unit"><span class="time-num">${hours}</span><span class="time-label">ساعة</span></div>
+        <div class="time-unit"><span class="time-num">${minutes}</span><span class="time-label">دقيقة</span></div>
+        <div class="time-unit"><span class="time-num">${seconds}</span><span class="time-label">ثانية</span></div>
+    `;
+}
+
+// تحديث العداد كل ثانية
+setInterval(updateTimer, 1000);
+updateTimer(); // استدعاء فوري عشان ميبدأش بصفار
+
+        setInterval(createParticle, 200);
+    </script>
+</body>
+</html>
